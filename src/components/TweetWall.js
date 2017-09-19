@@ -4,15 +4,27 @@ import Tweet from './Tweet';
 class TweetWall extends React.Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       tweets: []
     };
   }
 
   // TODO: componentWillMount()
+  componentWillMount() {
+    this.state.tweets = this.props.newTweets
+  }
+
   // TODO: shouldComponentUpdate()
+  shouldComponentUpdate(nextProps) {
+    return (nextProps.newTweets.length !== 0)
+  }
   // TODO: componentWillReceiveProps()
+  componentWillReceiveProps(nextProps) {
+    const newArr = [...nextProps.newTweets, ...this.state.tweets]
+    this.state.tweets = newArr
+
+  }
 
   render() {
     const tweets = this.state.tweets.map((tweet, index) => <Tweet text={tweet.text} key={index} />);
